@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const bgmBtn = document.getElementById('bgmToggleBtn');
   const bgmAudio = document.getElementById('bgmAudio');
-        bgmAudio.volume = 0.4;
+        bgmAudio.volume = 0.3;
   const bgmStatusText = document.getElementById('bgmStatus');
 
   if (bgmBtn && bgmAudio && bgmStatusText) {
