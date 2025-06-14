@@ -358,7 +358,7 @@ export const urbanData = [
   {
     id: 1,
     title: '층간소음',
-    likes: 13,
+    likes: 30,
     date: '2025-05-20',
     filter: 'korea',
     level: 4,
@@ -431,7 +431,7 @@ export const urbanData = [
   {
     id: 2,
     title: '하나코야 놀자',
-    likes: 25,
+    likes: 6,
     date: '2025-05-18',
     filter: 'foreign',
     level: 4,
@@ -567,7 +567,7 @@ export const urbanData = [
   {
     id: 4,
     title: '졸음운전',
-    likes: 0,
+    likes: 12,
     date: '2025-05-19',
     filter: 'user',
     level: 1,
@@ -620,7 +620,7 @@ export const urbanData = [
   {
     id: 5,
     title: '석류나무 옆 담벼락',
-    likes: 0,
+    likes: 15,
     date: '2025-06-12',
     filter: 'user',
     level: 2,
@@ -680,7 +680,7 @@ export const urbanData = [
   {
     id: 6,
     title: '광장에 있는 여인',
-    likes: 13,
+    likes: 18,
     date: '2025-05-18',
     filter: 'korea',
     level: 3,
@@ -741,7 +741,7 @@ export const urbanData = [
   {
     id: 7,
     title: '택배 왔습니다',
-    likes: 0,
+    likes: 21,
     date: '2025-06-04',
     filter: 'user',
     level: 4,
