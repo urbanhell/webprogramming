@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
           </form>
         </div>
-    `;
+      `;
 
       // ── 5-1. 수정·삭제 버튼 영역 추가 ──────────────────────────────────────────────
       const actionsDiv = document.createElement("div");
