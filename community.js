@@ -277,46 +277,66 @@ document.addEventListener("DOMContentLoaded", () => {
           const div = document.createElement("div");
           div.className = "comment-item";
           div.innerHTML = `
-            <p><strong>${c.nickname}</strong> <small>${c.date}</small></p>
-            <p id="commentText-${c.id}">${c.text}</p>
+            <div style="background:#1b1b1b; padding:1rem 1.2rem; border-radius:8px; display:flex; justify-content:space-between; align-items:flex-start;">
+              <div>
+                <div style="font-weight:bold; color:#f2f2f2; margin-bottom:0.3rem;">${c.nickname} <small style="color:#999; font-weight:normal;">${c.date}</small></div>
+                <div style="color:#ccc;" id="commentText-${c.id}">${c.text}</div>
+              </div>
+              ${
+                currentUser && currentUser.uid === c.uid
+                  ? `<div style="margin-left:1rem; display:flex; flex-direction:column; gap:0.4rem;">
+                       <button data-id="${c.id}" class="editBtn" style="background:#333; color:#fff; border:none; padding:0.3rem 0.8rem; border-radius:5px; cursor:pointer;">수정</button>
+                       <button data-id="${c.id}" class="deleteBtn" style="background:#333; color:#fff; border:none; padding:0.3rem 0.8rem; border-radius:5px; cursor:pointer;">삭제</button>
+                     </div>`
+                  : ''
+              }
+            </div>
           `;
+          listEl.appendChild(div);
+        
+          // 버튼 이벤트는 기존과 동일하게 유지
           if (currentUser && currentUser.uid === c.uid) {
-            const btns = document.createElement("div");
-            btns.innerHTML = `
-              <button class="editBtn" data-id="${c.id}">수정</button>
-              <button class="deleteBtn" data-id="${c.id}">삭제</button>
-            `;
-            div.appendChild(btns);
-            // 삭제
-            btns.querySelector(".deleteBtn").addEventListener("click", async () => {
+            const editBtn = div.querySelector(".editBtn");
+            const deleteBtn = div.querySelector(".deleteBtn");
+        
+            deleteBtn.addEventListener("click", async () => {
               if (confirm("댓글을 삭제하시겠습니까?")) {
                 await deleteDoc(doc(db, "comments", c.id));
                 loadComments();
               }
             });
-            // 수정
-            btns.querySelector(".editBtn").addEventListener("click", () => {
+        
+            editBtn.addEventListener("click", () => {
               const textEl = document.getElementById(`commentText-${c.id}`);
               const ta = document.createElement("textarea");
               ta.value = c.text;
+              ta.style.width = "100%";
+              ta.style.marginTop = "0.5rem";
+        
               const save = document.createElement("button");
               save.textContent = "저장";
+              save.style.marginRight = "0.5rem";
               const cancel = document.createElement("button");
               cancel.textContent = "취소";
+        
+              const btnWrapper = document.createElement("div");
+              btnWrapper.style.marginTop = "0.5rem";
+              btnWrapper.appendChild(save);
+              btnWrapper.appendChild(cancel);
+        
               textEl.replaceWith(ta);
-              btns.replaceWith(save);
-              save.after(cancel);
-
+              div.querySelector(".editBtn").replaceWith(btnWrapper);
+        
               save.addEventListener("click", async () => {
                 const newText = ta.value.trim();
                 if (!newText) return alert("댓글 내용을 입력해주세요.");
                 await updateDoc(doc(db, "comments", c.id), { text: newText });
                 loadComments();
               });
+        
               cancel.addEventListener("click", loadComments);
             });
           }
-          listEl.appendChild(div);
         });
       }
 
