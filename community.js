@@ -95,18 +95,28 @@ document.addEventListener("DOMContentLoaded", () => {
           <button id="likeButton">❤️ 좋아요 (${data.likes})</button>
         </div>
         <hr/>
-        <div id="commentsSection">
-          <h3 style="margin-bottom: 1rem;">댓글</h3>
-          <div id="commentList" style="display: flex; flex-direction: column; gap: 1rem;"></div>
-          <div style="display: flex; flex-direction: column; margin-top: 2rem;">
-            <textarea id="commentInput" placeholder="댓글을 입력하세요"
-              style="width: 95%; min-height: 100px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; resize: vertical;"></textarea>
-            <div style="display: flex; justify-content: flex-end; margin-top: 0.5rem;">
-              <button id="addCommentButton" style="padding: 0.5rem 1rem; border: none; border-radius: 6px; background-color: #222; color: white; cursor: pointer;">댓글 작성</button>
-            </div>
-          </div>
+        <div class="comment-section" style="margin-top:2rem; background-color:#111; border-radius:1rem; padding:1.5rem; color:#eee; box-shadow:0 0 10px rgba(255,0,0,0.15);">
+          <h3 style="font-size: 1.3rem; margin-bottom: 1.2rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem;">🗨️ 댓글</h3>
+        
+          <div id="commentList" style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.5rem;"></div>
+        
+          <form id="commentForm" style="display:flex; gap:0.6rem;">
+            <input
+              type="text"
+              id="commentInput"
+              placeholder="댓글을 입력하세요"
+              required
+              style="flex:1; background-color:#1c1c1c; color:#fff; border:1px solid #444; border-radius:6px; padding:0.75rem 1rem; font-size:1rem;"
+            />
+            <button
+              type="submit"
+              style="background-color:crimson; color:#fff; border:none; padding:0.75rem 1.3rem; border-radius:6px; font-size:1rem; cursor:pointer;"
+            >
+              댓글 작성
+            </button>
+          </form>
         </div>
-      `;
+    `;
 
       // ── 5-1. 수정·삭제 버튼 영역 추가 ──────────────────────────────────────────────
       const actionsDiv = document.createElement("div");
@@ -313,18 +323,22 @@ document.addEventListener("DOMContentLoaded", () => {
       loadComments();
 
       // 댓글 작성
-      document.getElementById("addCommentButton").addEventListener("click", async () => {
-        if (!currentUser) return alert("로그인이 필요합니다.");
-        const ta = document.getElementById("commentInput");
-        const text = ta.value.trim();
-        if (!text) return alert("댓글을 입력해주세요.");
-        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-        const nickname = userDoc.exists() ? userDoc.data().nickname || "익명" : "익명";
-        const date = new Date().toISOString().slice(0, 10);
-        await addDoc(collection(db, "comments"), { postId, uid: currentUser.uid, nickname, text, date });
-        ta.value = "";
-        loadComments();
-      });
+      const commentForm = document.getElementById("commentForm");
+      if (commentForm) {
+        commentForm.addEventListener("submit", async e => {
+          e.preventDefault();
+          if (!currentUser) return alert("로그인이 필요합니다.");
+          const ta = document.getElementById("commentInput");
+          const text = ta.value.trim();
+          if (!text) return alert("댓글을 입력해주세요.");
+          const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+          const nickname = userDoc.exists() ? userDoc.data().nickname || "익명" : "익명";
+          const date = new Date().toISOString().slice(0, 10);
+          await addDoc(collection(db, "comments"), { postId, uid: currentUser.uid, nickname, text, date });
+          ta.value = "";
+          loadComments();
+        });
+      }
     });
 
     return;
