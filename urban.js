@@ -278,7 +278,7 @@ document.addEventListener("click", (e) => {
         <button id="likeBtn">❤️ 좋아요</button> <span id="likeCount">0</span>
       </div>
 
-      <div class="comment-section" style="margin-top:2rem; background-color:#111; border-radius:1rem; padding:1.5rem; color:#eee; box-shadow:0 0 10px rgba(255,0,0,0.15);">
+      <div class="comment-section" style="margin-top:2rem; background-color:#111; border-radius:1rem; padding:1.5rem; color:#eee; box-shadow:0 0 10px rgba(255,0,0,0.15); width:95%">
         <h3 style="font-size: 1.3rem; margin-bottom: 1.2rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem;">🗨️ 댓글</h3>
       
         <div id="commentList" style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.5rem;"></div>
